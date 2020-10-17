@@ -66,3 +66,15 @@
   height: 100%;
   fill: #f1e5e6;
 }
+
+/* image show style */
+
+.image {
+}
+
+#output {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}

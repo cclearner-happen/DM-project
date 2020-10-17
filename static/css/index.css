@@ -19,16 +19,6 @@
   box-sizing: border-box;
 }
 
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
-
 body {
   font-family: Avenir, "Helvetica Neue", "Lato", "Segoe UI", Helvetica, Arial,
     sans-serif;
@@ -37,26 +27,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-a {
-  outline: none;
-  color: #d3394c;
-  text-decoration: none;
-}
-
-a:hover,
-a:focus {
-  color: #722040;
-}
-
-.hidden {
-  position: absolute;
-  overflow: hidden;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
 /* content */
 
 .content {
@@ -80,8 +50,5 @@ a:focus {
 .box {
   background-color: #dfc8ca;
   padding: 6.25rem 1.25rem;
-}
-
-.box + .box {
-  margin-top: 2.5rem;
+  margin-top: 200px;
 }
