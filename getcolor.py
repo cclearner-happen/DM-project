@@ -68,9 +68,9 @@ def getColor(filename):
     for i in range(height):
         for j in range(width):
             img_res[i][j] = color_label[labels[i][j]]
-
+    print("Reshape over")
     # 保存聚合后的图像
-    io.imsave('/static/images/compressed_disc.png', img_res)
+    io.imsave('compressed_disc.png', img_res)
     print('保存聚合后的图像......')
 
     # 以下用于显示图像+色卡效果，不需要可以删掉
@@ -94,5 +94,5 @@ def getColor(filename):
         start += row_start
 
     # 保存带有色卡的图像
-    io.imsave('/static/images/colorcard_disc.png', color_card)
+    io.imsave('colorcard_disc.png', color_card)
     print('保存聚合后的图像以及图像色卡......')
