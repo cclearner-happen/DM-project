@@ -6,20 +6,23 @@
         3)将所有颜色聚合到Kmeans聚类结果，显示聚合后的图像以及主要颜色组成的色卡
 '''
 
-
+import os
 import cv2
 from skimage import io
 import numpy as np
 from sklearn.cluster import KMeans
+
+inputpath = "images/upload/"
+outputpath = "images/output/"
 
 
 def getColor(filename):
     # 图像路径
     # K：聚类的数目（k=4，则整张图像聚合成四种颜色）
     K = 4
-
+    filepath = "static/" + inputpath + filename
     # 读取图像
-    img = cv2.imread(filename)
+    img = cv2.imread(filepath)
     if (img is None):
         print(' Failed to read picture... ')
 
@@ -70,7 +73,9 @@ def getColor(filename):
             img_res[i][j] = color_label[labels[i][j]]
     print("Reshape over")
     # 保存聚合后的图像
-    io.imsave('compressed_disc.png', img_res)
+    compressedPath = outputpath + \
+        os.path.splitext(filename)[0] + '_compressed_disc.png'
+    io.imsave("static/" + compressedPath, img_res)
     print('保存聚合后的图像......')
 
     # 以下用于显示图像+色卡效果，不需要可以删掉
@@ -94,5 +99,8 @@ def getColor(filename):
         start += row_start
 
     # 保存带有色卡的图像
-    io.imsave('colorcard_disc.png', color_card)
+    colorPath = outputpath + \
+        os.path.splitext(filename)[0] + '_colorcard_disc.png'
+    io.imsave("static/" + colorPath, color_card)
     print('保存聚合后的图像以及图像色卡......')
+    return [compressedPath, colorPath]

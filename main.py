@@ -4,7 +4,7 @@ import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'static/images/'
+UPLOAD_FOLDER = 'static/images/upload/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
@@ -36,19 +36,17 @@ def upload_image():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # print('upload_image filename: ' + filename)
         # flash('Image successfully uploaded and displayed')
-        return render_template('index.html', filename=filename)
+
+        import getcolor
+        outputImgs = getcolor.getColor(filename)
+        return render_template('colorShow.html', outputImgs=outputImgs)
     else:
         flash('Allowed image types are -> png, jpg, jpeg, gif')
         return redirect(request.url)
 
-# show the image in static/images
-@app.route('/display/<filename>')
-def display_image(filename):
-    print('display_image filename: ' + filename)
-    filepath = 'static/images/' + filename
-    import getcolor
-    getcolor.getColor(filepath)
-    return redirect(url_for('static', filename='images/' + filename), code=301)
+
+# @app.route('/colorshow')
+# def colorshow():
 
 
 if __name__ == "__main__":

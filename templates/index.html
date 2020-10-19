@@ -24,8 +24,7 @@
       <div class="content">
         <div class="box">
           <form action="/" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="file" class="inputfile" autocomplete="off" required/>
-              <input type="submit" value="Submit">
+            <input type="file" name="file" id="file" class="inputfile" onchange="loadFile(event)"/>
             <label for="file"
               ><figure>
                 <svg
@@ -41,17 +40,19 @@
               </figure>
               <span>Choose a file&hellip;</span></label
             >
+            <input type="submit" value="开始生成">
           </form>
         </div>
-        {% if filename %}
         <div class="image">
-          <img
-            id="inputImage"
-            src="{{ url_for('display_image', filename=filename) }}"
-          />
+          <img id="inputImage"/>
         </div>
-        {% endif %}
       </div>
     </div>
+    <script>
+      var loadFile = (event) => {
+        var image = document.getElementById("inputImage");
+        image.src = URL.createObjectURL(event.target.files[0]);
+      };
+    </script>
   </body>
 </html>
