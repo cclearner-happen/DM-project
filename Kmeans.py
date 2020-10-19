@@ -5,15 +5,17 @@
         2)设置聚类中心数目，采用Kmeans聚类;
         3)将所有颜色聚合到Kmeans聚类结果，显示聚合后的图像以及主要颜色组成的色卡
 '''
+
+
 import cv2
 from skimage import io
 import numpy as np
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
-if __name__ == '__main__':
+def getColor():
     # 图像路径
-    addr="disc.png"
+    addr="/Users/apple/git-repos/DM-project/static/image/086.png"
     # K：聚类的数目（k=4，则整张图像聚合成四种颜色）
     K=4
 
