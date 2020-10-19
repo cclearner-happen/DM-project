@@ -52,3 +52,4 @@ K-means：https://www.bilibili.com/video/BV164411b7dx?p=77
 
 主要参考的那个小游戏：https://magenta.tensorflow.org/demos/web/
 
+midi格式解析：https://www.jianshu.com/p/59d74800b43b
