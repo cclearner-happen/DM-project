@@ -4,27 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../static/css/component.css" />
     <link rel="stylesheet" href="../static/css/normalize.css" />
     <link rel="stylesheet" href="../static/css/index.css" />
   </head>
   <body>
-    <p>
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-      {% endwith %}
-    </p>
     <div class="container">
       <div class="content">
         <div class="box">
-          <form action="/" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="file" class="inputfile" onchange="loadFile(event)"/>
+          <form action="" method="post" enctype="multipart/form-data" id="form">
+            <input
+              type="file"
+              name="file"
+              id="file"
+              class="inputfile"
+              style="display: none"
+              onchange="loadFile(event)"
+            />
             <label for="file"
               ><figure>
                 <svg
@@ -38,13 +40,19 @@
                   />
                 </svg>
               </figure>
-              <span>Choose a file&hellip;</span></label
+              <span>选择图片(png, jpg, jpeg, gif)</span></label
             >
-            <input type="submit" value="开始生成">
+            <input
+              type="submit"
+              value="开始生成!"
+              class="btn btn-danger"
+              id="submit"
+            >
+            </input>
           </form>
         </div>
         <div class="image">
-          <img id="inputImage"/>
+          <img id="inputImage" />
         </div>
       </div>
     </div>

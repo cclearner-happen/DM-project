@@ -12,10 +12,6 @@
   /* 10px 20px */
 }
 
-.inputfile {
-  display: none;
-}
-
 .inputfile:focus + label,
 .inputfile.has-focus + label {
   outline: 1px dotted #000;
@@ -66,7 +62,23 @@
   height: 100%;
   fill: #f1e5e6;
 }
-
+/* sumbit style */
+#submit {
+  display: block;
+}
+/* loader */
+#loader {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75) url(/static/images/loader.gif) no-repeat
+    center center;
+  z-index: 10000;
+}
 /* image show style */
 
 .image {

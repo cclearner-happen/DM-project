@@ -1,7 +1,8 @@
 import os
+import time
 
 import urllib.request
-from flask import Flask, flash, request, redirect, url_for, render_template
+from flask import Flask, flash, request, redirect, url_for, render_template, Response
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'static/images/upload/'
@@ -36,7 +37,6 @@ def upload_image():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # print('upload_image filename: ' + filename)
         # flash('Image successfully uploaded and displayed')
-
         import getcolor
         outputImgs = getcolor.getColor(filename)
         return render_template('colorShow.html', outputImgs=outputImgs)
@@ -44,9 +44,23 @@ def upload_image():
         flash('Allowed image types are -> png, jpg, jpeg, gif')
         return redirect(request.url)
 
+# get progress with eventsource
+# @app.route('/progress')
+# def progress():
+#     def generate():
+#         x = 0
 
-# @app.route('/colorshow')
-# def colorshow():
+#         while x <= 100:
+#             yield "data:" + str(x) + "\n\n"
+#             x = x + 10
+#             time.sleep(0.1)
+
+#     return Response(generate(), mimetype='text/event-stream')
+# @app.route('/show')
+# def show(filename):
+
+#     # @app.route('/colorshow')
+#     # def colorshow():
 
 
 if __name__ == "__main__":

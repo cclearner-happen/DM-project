@@ -55,6 +55,6 @@ def predict_and_sample(inference_model, x_initializer=x_initializer, a_initializ
     return results, indices
 
 
-results, indices = predict_and_sample(
-    inference_model, x_initializer, a_initializer, c_initializer)
+# results, indices = predict_and_sample(
+#     inference_model, x_initializer, a_initializer, c_initializer)
 out_stream = generate_music(inference_model)

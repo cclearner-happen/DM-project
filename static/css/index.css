@@ -39,7 +39,7 @@ body {
 
 .content footer {
   color: #b39295;
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 .content footer a:hover,
@@ -50,5 +50,5 @@ body {
 .box {
   background-color: #dfc8ca;
   padding: 6.25rem 1.25rem;
-  margin-top: 200px;
+  margin-top: 20px;
 }
