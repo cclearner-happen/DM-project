@@ -1,0 +1,5 @@
+game文件夹中是cocos项目
+code文件夹中static文件夹中添加了web-mobile , 是cocos项目构建出的游戏，我在templates/index.html中添加了一个超链接跳转到游戏
+先上传一下用于cx制作图片部分
+游戏现在还有碰撞和跳跃的一些bug以及地图和音乐的相关性以后再说55555
+（现在的项目是动态读取static/music中的mp3音乐，以后音乐文件这样放就可）
