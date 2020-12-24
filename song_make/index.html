@@ -150,7 +150,10 @@
               </div>
             </div>
             <br>
-            <button id="saveBtn" class="button">保存该样本音乐（Midi格式）</button>
+            <div style="display: flex;justify-content: space-around;">
+              <button id="saveBtn" class="button">保存该样本音乐</button>
+              <button id="gameBtn" class="button">进入游戏！</button>
+            </div>
           </div>
 
 
@@ -176,6 +179,6 @@
   </body>  
   <script src="helpers.js"></script>
   <script src="script.js"></script>
-  <script src="https://unpkg.com/midi-json-parser@8.0.17/build/es5/bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" defer></script>
+  <script src="https://unpkg.com/@tonejs/midi"></script>
 </html>

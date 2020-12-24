@@ -549,11 +549,16 @@ function init() {
   fileBtn.addEventListener("change", loadFile);
   sampleBtn.addEventListener("click", loadSample);
   urlBtn.addEventListener("click", loadURL);
-  saveBtn.addEventListener("click", () =>
-    saveAs(
-      new File([mm.sequenceProtoToMidi(currentSample)], "midime_sample.mid")
-    )
-  );
+  saveBtn.addEventListener("click", () => {
+    var midiFile = new File(
+      [mm.sequenceProtoToMidi(currentSample)],
+      "midime_sample.json"
+    );
+    saveAs(midiFile);
+    // const midi = new Midi(currentSample);
+    // var jsonFile = new File([midi], "midime_sample.json");
+    // saveAs(jsonFile);
+  });
 
   btnPlayInput.addEventListener("click", (e) => play(e, 0));
   btnPlayMelody.addEventListener("click", (e) => play(e, 1));
