@@ -549,9 +549,6 @@ function init() {
   fileBtn.addEventListener("change", loadFile);
   sampleBtn.addEventListener("click", loadSample);
   urlBtn.addEventListener("click", loadURL);
-  repeatBtn.addEventListener("click", repeatTwice);
-  testBtn.addEventListener("click", testLength);
-  testBtn2.addEventListener("click", testLength2);
   saveBtn.addEventListener("click", () =>
     saveAs(
       new File([mm.sequenceProtoToMidi(currentSample)], "midime_sample.mid")
@@ -667,149 +664,6 @@ function loadURL() {
   });
 }
 
-// TODO append
-async function testLength2() {
-  console.log("This is testLength2:");
-  //console.log("444");
-
-  stopPlayer(playerSample, document.getElementById("btnPlaySample"));
-  let z = [0, 0, 0, 0];
-
-  // Update the dimensions displayed for each of the batches.
-  let sliders = midimeSliders.querySelectorAll("input");
-  for (let i = 0; i < 4; i++) {
-    z[i] = parseFloat(sliders[i].value);
-  }
-  sample = await midime.decode(mm.tf.tensor(z, [1, 4]));
-  currentSample = (await mvae.decode(sample))[0];
-  console.log(currentSample);
-
-  console.log(z);
-
-  let nextSample;
-  for (let i = 0; i < 10; i++) {
-    console.log("loop:" + i);
-    for (let j = 0; j < 4; j++) {
-      if (z[j] < 0.2) z[j] += 0.1;
-      else if (z[j] > 0.8) z[j] -= 0.1;
-      else {
-        if ((i % 2 == 0) == (j % 2 == 0)) z[j] += 0.1;
-        else z[j] -= 0.1;
-      }
-    }
-    console.log(z);
-
-    sample = await midime.decode(mm.tf.tensor(z, [1, 4]));
-    nextSample = (await mvae.decode(sample))[0];
-    console.log(nextSample);
-
-    let currentnotes = currentSample.notes;
-    let nextnotes = nextSample.notes;
-
-    const currenttime = currentnotes[currentnotes.length - 1].quantizedEndStep;
-    const nexttime = nextnotes[nextnotes.length - 1].quantizedEndStep;
-
-    for (j = 0, len = nextnotes.length; j < len; j++) {
-      nextnotes[j].quantizedStartStep += currenttime;
-      nextnotes[j].quantizedEndStep += currenttime;
-    }
-    currentSample.notes = currentSample.notes.concat(nextnotes);
-    currentSample.totalQuantizedSteps += nexttime;
-  }
-
-  z = sample.arraySync()[0];
-  updateFullSliders(z);
-  updateVisualizer();
-  //console.log("444");
-}
-
-async function testLength() {
-  console.log("This is testLength:");
-  stopPlayer(playerSample, document.getElementById("btnPlaySample"));
-
-  const z = JSON.parse(JSON.stringify(training.zArray));
-
-  // Update the dimensions displayed for each of the batches.
-  const sliders = mvaeSliders.querySelectorAll("input");
-
-  for (let i = 0; i < N_DIMS; i++) {
-    const dim = SORTED_DIMS[i];
-    z[dim] = parseFloat(sliders[i].value);
-  }
-  plot(z);
-  let nextSample;
-  const zTensor = mm.tf.tensor(z, [1, 256]);
-  const ns = await mvae.decode(zTensor);
-  currentSample = mm.sequences.concatenate(ns);
-
-  for (let i = 0; i < 10; i++) {
-    console.log("loop:" + i);
-    for (let j = 0; j < N_DIMS; j++) {
-      z[j] += 0.01 * j;
-    }
-    //let nextSample=currentSample;
-    const zTensor = mm.tf.tensor(z, [1, 256]);
-    const ns = await mvae.decode(zTensor);
-    nextSample = mm.sequences.concatenate(ns);
-    let currentnotes = currentSample.notes;
-    let nextnotes = nextSample.notes;
-
-    const currenttime = currentnotes[currentnotes.length - 1].quantizedEndStep;
-    const nexttime = nextnotes[nextnotes.length - 1].quantizedEndStep;
-
-    for (j = 0, len = nextnotes.length; j < len; j++) {
-      nextnotes[j].quantizedStartStep += currenttime;
-      nextnotes[j].quantizedEndStep += currenttime;
-    }
-    currentSample.notes = currentSample.notes.concat(nextnotes);
-
-    currentSample.totalQuantizedSteps += nexttime;
-  }
-
-  console.log("333");
-  updateVisualizer();
-  //saveAs(new File([mm.sequenceProtoToMidi(currentSample)], 'game_input.mid'));
-}
-
-async function repeatTwice() {
-  console.log("111");
-  stopPlayer(playerSample, document.getElementById("btnPlaySample"));
-
-  const z = JSON.parse(JSON.stringify(training.zArray));
-
-  // Update the dimensions displayed for each of the batches.
-  const sliders = mvaeSliders.querySelectorAll("input");
-  for (let i = 0; i < N_DIMS; i++) {
-    const dim = SORTED_DIMS[i];
-    z[dim] = parseFloat(sliders[i].value);
-  }
-  plot(z);
-  let nextSample = currentSample;
-  const zTensor = mm.tf.tensor(z, [1, 256]);
-  const ns = await mvae.decode(zTensor);
-  currentSample = mm.sequences.concatenate(ns);
-  currentSample.totalQuantizedSteps = 2 * currentSample.totalQuantizedSteps;
-
-  const addtime =
-    nextSample.notes[nextSample.notes.length - 1].quantizedEndStep;
-  //console.log(nextSample.notes.length);
-  for (j = 0, len = nextSample.notes.length; j < len; j++) {
-    nextSample.notes[j].quantizedStartStep += addtime;
-    nextSample.notes[j].quantizedEndStep += addtime;
-  }
-  //console.log(nextSample);
-  //console.log("-----");
-  //currentSample = currentSample+ currentSample;
-  //console.log(currentSample.notes.concat(currentSample.notes));
-  currentSample.notes = currentSample.notes.concat(nextSample.notes);
-  //console.log(currentSample);
-  //console.log(currentSample.concat(currentSample));
-
-  console.log("111");
-  updateVisualizer();
-  //saveAs(new File([mm.sequenceProtoToMidi(currentSample)], 'game_input.mid'));
-}
-
 async function showInput(ns) {
   const instruments = [];
   let shouldSplit = false;
@@ -904,8 +758,8 @@ async function sample() {
     randZs.dispose();
   }
 
-  updateFullSliders(zArray);
-  updateVisualizer();
+  // updateFullSliders(zArray);
+  // updateVisualizer();
   training.zArray = zArray;
 }
 
@@ -935,7 +789,7 @@ async function train() {
   });
   updateUI("training-done");
   sample();
-  testLength2();
+  updateFromMidimeSliders();
 }
 
 async function play(event, playerIndex) {
@@ -998,26 +852,48 @@ function updateFullSliders(z) {
 }
 
 async function updateFromFullSliders() {
-  console.log("111");
+  console.log("This is testLength:");
   stopPlayer(playerSample, document.getElementById("btnPlaySample"));
 
   const z = JSON.parse(JSON.stringify(training.zArray));
 
   // Update the dimensions displayed for each of the batches.
   const sliders = mvaeSliders.querySelectorAll("input");
+
   for (let i = 0; i < N_DIMS; i++) {
     const dim = SORTED_DIMS[i];
     z[dim] = parseFloat(sliders[i].value);
   }
   plot(z);
-
+  let nextSample;
   const zTensor = mm.tf.tensor(z, [1, 256]);
   const ns = await mvae.decode(zTensor);
   currentSample = mm.sequences.concatenate(ns);
-  console.log(currentSample);
-  //currentSample.totalQuantizedSteps=128;
 
-  console.log("111");
+  for (let i = 0; i < 10; i++) {
+    console.log("loop:" + i);
+    for (let j = 0; j < N_DIMS; j++) {
+      z[j] += 0.01 * j;
+    }
+    //let nextSample=currentSample;
+    const zTensor = mm.tf.tensor(z, [1, 256]);
+    const ns = await mvae.decode(zTensor);
+    nextSample = mm.sequences.concatenate(ns);
+    let currentnotes = currentSample.notes;
+    let nextnotes = nextSample.notes;
+
+    const currenttime = currentnotes[currentnotes.length - 1].quantizedEndStep;
+    const nexttime = nextnotes[nextnotes.length - 1].quantizedEndStep;
+
+    for (j = 0, len = nextnotes.length; j < len; j++) {
+      nextnotes[j].quantizedStartStep += currenttime;
+      nextnotes[j].quantizedEndStep += currenttime;
+    }
+    currentSample.notes = currentSample.notes.concat(nextnotes);
+
+    currentSample.totalQuantizedSteps += nexttime;
+  }
+
   updateVisualizer();
 }
 
