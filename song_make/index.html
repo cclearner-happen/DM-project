@@ -45,16 +45,8 @@
         <section id="section_1">
           <div class="index" id="two">1</div>
           
-          <p><b>MusicVAE</b> 是一种机器学习模型，已经在很多MIDI文件上进行过训练，
-            并且已经学会了生成旋律或三重奏。它将每个音乐样本表示为256个特征的向量，
-            每个不同的256个数字向量听起来就像是一段不同的音乐。
-            我们选取了90个比较重要的特征向量，在此生成滑块来控制和改变它，
-            滑动其中一些，看看它如何影响样品！
-          </p>
-            
-          <b>
+
             <p id="loadingStatus">请选择你需要生成的音乐类型（主旋律或者多音轨）...</p>
-          </b>
 
           <div id="loadChoice" hidden>
             <p>
@@ -82,7 +74,7 @@
           </div>
           
           <div id="input" hidden>
-            <p>你可以在这里试听你载入的Midi音乐：</p>
+            <p>你可以在这里试听我们载入的Midi音乐：</p>
             <div class="relative">
               <button id="btnPlayInput" class="button-circle" aria-label="play">
                 <svg class="iconPlay" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
@@ -119,7 +111,7 @@
           
           <div id="afterLoading" hidden>
             <p id="changeSample" hidden>
-              你也可以选择 <button class="button" id="btnSample" disabled>更换一个样本</button>
+            <button class="button" id="btnSample" disabled hidden>更换一个样本</button>
             </p>
             <div class="horizontal">
               <div class="sliders-container blue" id="midimeSlidersContainer" hidden>
@@ -164,7 +156,8 @@
             <button class="button" id="btnTrain">开始训练!</button> for <input id="trainingSteps" value="100" type="tel"> steps.
           </p>
           <p id="doneTraining" hidden>
-            训练完成！我们已经根据您的输入成功训练了您的个性化模型，请您返回Section 1，查看新模型生成的音乐。
+            训练完成！我们已经根据您的输入成功训练了您的个性化模型，您可以选择保存音乐，或者自由调整音乐特征向量。
+            然后进入我们根据生成音乐为您所生成的游戏地图
           </p>
           <div id="duringTraining" hidden>
             <p>训练进度: <b id="trainingStep">0</b> / <span id="totalSteps">100</span></p>

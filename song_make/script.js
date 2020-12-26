@@ -552,7 +552,7 @@ function init() {
   saveBtn.addEventListener("click", () => {
     var midiFile = new File(
       [mm.sequenceProtoToMidi(currentSample)],
-      "midime_sample.json"
+      "midime_sample.midi"
     );
     saveAs(midiFile);
     // const midi = new Midi(currentSample);
@@ -577,7 +577,7 @@ function ready(mode) {
   updateCopy();
   //splashScreen.hidden = true;
   //mainScreen.hidden = false;
-  updateUI("model-loading");
+  // updateUI("model-loading");
 
   const url =
     "https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/" +
@@ -585,7 +585,7 @@ function ready(mode) {
   mvae = new mm.MusicVAE(url);
   mvae.initialize().then(() => {
     sample();
-    updateUI("model-loaded");
+    // updateUI("model-loaded");
   });
   playerInput = new mm.SoundFontPlayer(
     "https://storage.googleapis.com/magentadata/js/soundfonts/sgm_plus"
@@ -616,6 +616,7 @@ function ready(mode) {
     div.innerHTML = `<input type="range" data-index=${i} min="-2" max="2" step="0.1" value="0">`;
     mvaeSliders.appendChild(div);
   }
+  loadSample();
 }
 
 // Loads a file from the user.
